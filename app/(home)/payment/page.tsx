@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { useCartStore } from "@/store/cart";
 
 type PaymentMethod = "gcash" | "maya";
 
@@ -35,6 +36,8 @@ const PAYMENT_METHODS: {
 
 export default function PaymentPage() {
   const router = useRouter();
+  const { items, totalPrice } = useCartStore();
+  const [hydrated, setHydrated] = useState(false);
 
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>("gcash");
   const [name, setName] = useState("");
@@ -42,15 +45,14 @@ export default function PaymentPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [orderId, setOrderId] = useState("");
-  const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    const id = localStorage.getItem("orderId") || "";
-    const amt = Number(localStorage.getItem("orderTotal") || 0);
-    setOrderId(id);
-    setTotal(amt);
+    setHydrated(true);
   }, []);
+
+  const total = totalPrice();
+  const shipping = total >= 1500 ? 0 : 100;
+  const grandTotal = total + shipping;
 
   const handlePay = async () => {
     if (!name.trim() || !phone.trim() || !email.trim()) {
@@ -66,13 +68,13 @@ export default function PaymentPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          amount: total,
+          amount: grandTotal,
           currency: "PHP",
           type: selectedMethod,
           name,
           phone,
           email,
-          orderId,
+          items,
         }),
       });
 
@@ -90,6 +92,8 @@ export default function PaymentPage() {
       setLoading(false);
     }
   };
+
+  if (!hydrated) return null;
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -159,18 +163,24 @@ export default function PaymentPage() {
             <div className="bg-white rounded-2xl border border-gray-100 p-5 space-y-2">
               <h2 className="font-semibold text-gray-800">Order Summary</h2>
               <div className="flex justify-between text-sm text-gray-500 mt-2">
-                <span>Reference</span>
-                <span className="font-mono text-xs text-gray-600">
-                  {orderId || "—"}
+                <span>
+                  Subtotal ({items.reduce((s, i) => s + i.qty, 0)} items)
                 </span>
+                <span>₱{total.toLocaleString()}</span>
               </div>
               <div className="flex justify-between text-sm text-gray-500">
-                <span>Amount</span>
-                <span className="font-bold text-gray-900 text-base">
-                  ₱{total.toLocaleString()}
+                <span>Shipping</span>
+                <span
+                  className={shipping === 0 ? "text-green-600 font-medium" : ""}
+                >
+                  {shipping === 0 ? "Free" : "₱100"}
                 </span>
               </div>
-              <div className="flex justify-between text-sm text-gray-500">
+              <div className="flex justify-between text-sm font-bold text-gray-900 pt-2 border-t border-gray-100">
+                <span>Total</span>
+                <span>₱{grandTotal.toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between text-sm text-gray-500 pt-1">
                 <span>Method</span>
                 <span className="font-medium capitalize">{selectedMethod}</span>
               </div>
@@ -229,7 +239,7 @@ export default function PaymentPage() {
               ) : (
                 <>
                   <CreditCard className="w-4 h-4 mr-2" />
-                  Pay ₱{total.toLocaleString()} via{" "}
+                  Pay ₱{grandTotal.toLocaleString()} via{" "}
                   {selectedMethod === "gcash" ? "GCash" : "Maya"}
                 </>
               )}

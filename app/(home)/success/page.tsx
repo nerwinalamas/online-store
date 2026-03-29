@@ -5,11 +5,13 @@ import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Suspense } from "react";
+import { useCartStore } from "@/store/cart";
 
 function SuccessContent() {
   const router = useRouter();
   const params = useSearchParams();
   const orderId = params.get("orderId") || "";
+  const clearCart = useCartStore((state) => state.clearCart);
 
   return (
     <main className="min-h-screen bg-white flex items-center justify-center">
@@ -19,8 +21,8 @@ function SuccessContent() {
           Payment Successful!
         </h1>
         <p className="text-gray-500">
-          Thank you for your order. We&apos;ve received your payment and will process
-          your order shortly.
+          Thank you for your order. We&apos;ve received your payment and will
+          process your order shortly.
         </p>
         {orderId && (
           <div className="bg-gray-50 rounded-xl p-4">
@@ -32,9 +34,7 @@ function SuccessContent() {
         )}
         <Button
           onClick={() => {
-            localStorage.removeItem("cart");
-            localStorage.removeItem("orderId");
-            localStorage.removeItem("orderTotal");
+            clearCart();
             router.push("/");
           }}
           className="w-full bg-blue-600 hover:bg-blue-700"
