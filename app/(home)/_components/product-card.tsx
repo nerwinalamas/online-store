@@ -1,6 +1,5 @@
 "use client";
 
-import { Minus, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { PRODUCT_CONFIG, DEFAULT_CONFIG } from "@/config/product-config";
 import { useCartStore } from "@/store/cart";
@@ -11,7 +10,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { items, addItem, updateQty } = useCartStore();
+  const { items, addItem } = useCartStore();
 
   const qty = items.find((i) => i.id === product.id)?.qty ?? 0;
   const config = PRODUCT_CONFIG[product.id] ?? DEFAULT_CONFIG;
@@ -39,11 +38,6 @@ export default function ProductCard({ product }: ProductCardProps) {
             )}
           >
             {product.badge}
-          </span>
-        )}
-        {qty > 0 && (
-          <span className="absolute top-3 right-3 w-6 h-6 bg-blue-600 text-white text-xs font-bold rounded-full flex items-center justify-center">
-            {qty}
           </span>
         )}
       </div>
@@ -75,27 +69,14 @@ export default function ProductCard({ product }: ProductCardProps) {
                   stock: product.stock,
                 })
               }
-              className="w-full h-10 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition"
+              className="w-full h-10 rounded-xl cursor-pointer bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition"
             >
               Add to Cart
             </button>
           ) : (
-            <div className="flex items-center justify-between">
-              <button
-                onClick={() => updateQty(product.id, -1)}
-                className="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition"
-              >
-                <Minus className="w-4 h-4" />
-              </button>
-              <span className="font-bold text-lg w-8 text-center">{qty}</span>
-              <button
-                onClick={() => updateQty(product.id, 1)}
-                disabled={qty >= product.stock}
-                className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 disabled:opacity-40 transition"
-              >
-                <Plus className="w-4 h-4" />
-              </button>
-            </div>
+            <button className="w-full h-10 rounded-xl bg-gray-400 cursor-not-allowed text-white text-sm font-semibold transition">
+              Added
+            </button>
           )}
         </div>
       </div>
