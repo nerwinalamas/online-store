@@ -5,7 +5,8 @@ create table products (
   price numeric not null,
   stock integer not null default 0,
   badge text,
-  created_at timestamptz default now()
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
 );
 
 alter table products enable row level security;

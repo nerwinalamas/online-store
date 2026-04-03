@@ -3,7 +3,9 @@ create table order_items (
   order_id uuid references orders(id) on delete cascade,
   product_id text references products(id),
   quantity integer not null,
-  unit_price numeric not null
+  unit_price numeric not null,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
 );
 
 alter table order_items enable row level security;
