@@ -27,7 +27,7 @@ export default function CartItems() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => updateQty(item.id, -1)}
-                className="w-8 h-8 rounded-lg border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition"
+                className="w-8 h-8 rounded-lg border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition cursor-pointer"
               >
                 <Minus className="w-3 h-3" />
               </button>
@@ -37,7 +37,7 @@ export default function CartItems() {
               <button
                 onClick={() => updateQty(item.id, 1)}
                 disabled={item.qty >= item.stock}
-                className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 disabled:opacity-40 transition"
+                className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 disabled:opacity-40 transition cursor-pointer"
               >
                 <Plus className="w-3 h-3" />
               </button>
@@ -51,7 +51,7 @@ export default function CartItems() {
             {/* Remove */}
             <button
               onClick={() => removeItem(item.id)}
-              className="p-1.5 hover:bg-red-50 rounded-lg text-gray-300 hover:text-red-400 transition"
+              className="p-1.5 hover:bg-red-50 rounded-lg text-gray-300 hover:text-red-400 transition cursor-pointer"
             >
               <Trash2 className="w-4 h-4" />
             </button>

@@ -22,7 +22,7 @@ export default function CartPage() {
         <div className="max-w-3xl mx-auto flex items-center gap-3">
           <button
             onClick={() => router.back()}
-            className="p-2 hover:bg-gray-100 rounded-full transition"
+            className="p-2 hover:bg-gray-100 rounded-full transition cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
@@ -39,7 +39,7 @@ export default function CartPage() {
         <OrderSummary />
         <Button
           onClick={() => router.push("/payment")}
-          className="w-full h-12 text-base bg-blue-600 hover:bg-blue-700 rounded-xl"
+          className="w-full h-12 text-base bg-blue-600 hover:bg-blue-700 rounded-xl cursor-pointer"
         >
           Proceed to Payment →
         </Button>

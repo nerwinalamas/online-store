@@ -61,7 +61,7 @@ export default function ShopPage() {
         <div className="fixed bottom-6 inset-x-0 flex justify-center px-6 z-20">
           <button
             onClick={() => router.push("/cart")}
-            className="flex items-center gap-4 bg-gray-900 text-white rounded-2xl px-6 py-4 shadow-2xl hover:bg-gray-800 transition"
+            className="flex items-center gap-4 bg-gray-900 text-white rounded-2xl px-6 py-4 shadow-2xl hover:bg-gray-800 transition cursor-pointer"
           >
             <span className="w-6 h-6 bg-blue-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
               {totalItems()}

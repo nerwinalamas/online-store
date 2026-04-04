@@ -26,7 +26,7 @@ export default function PaymentPage() {
         <div className="max-w-3xl mx-auto flex items-center gap-3">
           <button
             onClick={() => router.back()}
-            className="p-2 hover:bg-gray-100 rounded-full transition"
+            className="p-2 hover:bg-gray-100 rounded-full transition cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>

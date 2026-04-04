@@ -27,7 +27,7 @@ export default function Navbar() {
         {showCart && (
           <button
             onClick={() => router.push("/cart")}
-            className="relative p-2 hover:bg-gray-100 rounded-full transition"
+            className="relative p-2 hover:bg-gray-100 rounded-full transition cursor-pointer"
           >
             <ShoppingCart className="w-5 h-5" />
             {totalItems > 0 && (

@@ -47,7 +47,7 @@ export default function PaymentMethods({
               key={method.id}
               onClick={() => setSelectedMethod(method.id)}
               className={cn(
-                "relative border-2 rounded-xl py-4 flex flex-col items-center gap-2 transition font-medium",
+                "relative border-2 rounded-xl py-4 flex flex-col items-center gap-2 transition font-medium cursor-pointer",
                 selected
                   ? `${method.border} ${method.bg}`
                   : "border-gray-200 hover:border-gray-300 bg-white",
