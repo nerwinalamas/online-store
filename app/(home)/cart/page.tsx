@@ -1,15 +1,14 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cart";
 import CartItems from "./_components/cart-items";
 import OrderSummary from "./_components/order-summary";
 import CartEmpty from "./_components/cart-empty";
+import PageHeader from "@/components/page-header";
 
 export default function CartPage() {
-  const router = useRouter();
   const { items, totalItems } = useCartStore();
 
   if (items.length === 0) {
@@ -17,31 +16,20 @@ export default function CartPage() {
   }
 
   return (
-    <main className="flex-1 bg-gray-50">
-      <div className="bg-white border-b border-gray-100 px-6 py-3">
-        <div className="max-w-3xl mx-auto flex items-center gap-3">
-          <button
-            onClick={() => router.back()}
-            className="p-2 hover:bg-gray-100 rounded-full transition cursor-pointer"
-          >
-            <ArrowLeft className="w-4 h-4" />
-          </button>
-          <div>
-            <h1 className="text-base font-bold">Your Cart</h1>
-            <p className="text-xs text-gray-400">
-              {totalItems()} item{totalItems() !== 1 ? "s" : ""}
-            </p>
-          </div>
-        </div>
-      </div>
-      <section className="max-w-3xl mx-auto px-6 py-8 space-y-4">
+    <main className="min-h-screen bg-gray-50">
+      <PageHeader
+        title="Your Cart"
+        subtitle={`${totalItems()} item${totalItems() !== 1 ? "s" : ""}`}
+        backHref="/"
+      />
+      <section className="max-w-6xl mx-auto px-6 py-8 space-y-4">
         <CartItems />
         <OrderSummary />
         <Button
-          onClick={() => router.push("/payment")}
           className="w-full h-12 text-base bg-blue-600 hover:bg-blue-700 rounded-xl cursor-pointer"
+          asChild
         >
-          Proceed to Payment →
+          <Link href="/payment">Proceed to Payment →</Link>
         </Button>
       </section>
     </main>
