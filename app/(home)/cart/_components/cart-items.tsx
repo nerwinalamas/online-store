@@ -2,6 +2,7 @@
 
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cart";
 
 export default function CartItems() {
@@ -25,22 +26,25 @@ export default function CartItems() {
 
             {/* Qty controls */}
             <div className="flex items-center gap-2">
-              <button
+              <Button
+                variant="outline"
+                size="icon"
                 onClick={() => updateQty(item.id, -1)}
-                className="w-8 h-8 rounded-lg border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition cursor-pointer"
+                className="w-8 h-8 rounded-lg cursor-pointer"
               >
                 <Minus className="w-3 h-3" />
-              </button>
+              </Button>
               <span className="w-6 text-center font-semibold text-sm">
                 {item.qty}
               </span>
-              <button
+              <Button
+                size="icon"
                 onClick={() => updateQty(item.id, 1)}
                 disabled={item.qty >= item.stock}
-                className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 disabled:opacity-40 transition cursor-pointer"
+                className="w-8 h-8 rounded-lg bg-blue-600 hover:bg-blue-700 cursor-pointer"
               >
                 <Plus className="w-3 h-3" />
-              </button>
+              </Button>
             </div>
 
             {/* Subtotal */}
@@ -49,12 +53,14 @@ export default function CartItems() {
             </p>
 
             {/* Remove */}
-            <button
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={() => removeItem(item.id)}
-              className="p-1.5 hover:bg-red-50 rounded-lg text-gray-300 hover:text-red-400 transition cursor-pointer"
+              className="w-8 h-8 rounded-lg text-gray-300 hover:text-red-400 hover:bg-red-50 cursor-pointer"
             >
               <Trash2 className="w-4 h-4" />
-            </button>
+            </Button>
           </div>
         </div>
       ))}

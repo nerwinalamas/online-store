@@ -1,12 +1,12 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useProducts } from "@/hooks/useProducts";
 import { useCartStore } from "@/store/cart";
+import { Button } from "@/components/ui/button";
 import ProductCard from "./_components/product-card";
 
 export default function ShopPage() {
-  const router = useRouter();
   const { data: products = [], isLoading, isError } = useProducts();
   const { totalItems, totalPrice } = useCartStore();
 
@@ -59,17 +59,21 @@ export default function ShopPage() {
       {/* ── Sticky Cart Bar ── */}
       {totalItems() > 0 && (
         <div className="fixed bottom-6 inset-x-0 flex justify-center px-6 z-20">
-          <button
-            onClick={() => router.push("/cart")}
-            className="flex items-center gap-4 bg-gray-900 text-white rounded-2xl px-6 py-4 shadow-2xl hover:bg-gray-800 transition cursor-pointer"
+          <Button
+            className="flex items-center gap-4 bg-gray-900 text-white rounded-2xl px-6 py-4 shadow-2xl hover:bg-gray-800 h-auto"
+            asChild
           >
-            <span className="w-6 h-6 bg-blue-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
-              {totalItems()}
-            </span>
-            <span className="font-semibold">View Cart</span>
-            <span className="text-gray-400">·</span>
-            <span className="font-bold">₱{totalPrice().toLocaleString()}</span>
-          </button>
+            <Link href="/cart">
+              <span className="w-6 h-6 bg-blue-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                {totalItems()}
+              </span>
+              <span className="font-semibold">View Cart</span>
+              <span className="text-gray-400">·</span>
+              <span className="font-bold">
+                ₱{totalPrice().toLocaleString()}
+              </span>
+            </Link>
+          </Button>
         </div>
       )}
     </main>

@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import { PRODUCT_CONFIG, DEFAULT_CONFIG } from "@/config/product-config";
 import { useCartStore } from "@/store/cart";
+import { Button } from "@/components/ui/button";
 import { Products } from "@/types/products.types";
 
 interface ProductCardProps {
@@ -60,7 +61,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
 
           {qty === 0 ? (
-            <button
+            <Button
               onClick={() =>
                 addItem({
                   id: product.id,
@@ -69,14 +70,17 @@ export default function ProductCard({ product }: ProductCardProps) {
                   stock: product.stock,
                 })
               }
-              className="w-full h-10 rounded-xl cursor-pointer bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition"
+              className="w-full h-10 rounded-xl cursor-pointer bg-blue-600 hover:bg-blue-700 text-sm font-semibold"
             >
               Add to Cart
-            </button>
+            </Button>
           ) : (
-            <button className="w-full h-10 rounded-xl bg-gray-400 cursor-not-allowed text-white text-sm font-semibold transition">
+            <Button
+              disabled
+              className="w-full h-10 rounded-xl text-sm font-semibold"
+            >
               Added
-            </button>
+            </Button>
           )}
         </div>
       </div>

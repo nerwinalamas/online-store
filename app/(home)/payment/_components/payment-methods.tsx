@@ -2,6 +2,7 @@
 
 import { CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { PaymentMethod } from "../page";
 
 const PAYMENT_METHODS: {
@@ -43,13 +44,14 @@ export default function PaymentMethods({
         {PAYMENT_METHODS.map((method) => {
           const selected = selectedMethod === method.id;
           return (
-            <button
+            <Button
               key={method.id}
+              variant="outline"
               onClick={() => setSelectedMethod(method.id)}
               className={cn(
-                "relative border-2 rounded-xl py-4 flex flex-col items-center gap-2 transition font-medium cursor-pointer",
+                "relative border-2 rounded-xl py-4 h-auto flex flex-col gap-2 font-medium cursor-pointer",
                 selected
-                  ? `${method.border} ${method.bg}`
+                  ? `${method.border} ${method.bg} hover:${method.bg}`
                   : "border-gray-200 hover:border-gray-300 bg-white",
               )}
             >
@@ -64,7 +66,7 @@ export default function PaymentMethods({
               {selected && (
                 <CheckCircle2 className={cn("w-4 h-4", method.color)} />
               )}
-            </button>
+            </Button>
           );
         })}
       </div>
